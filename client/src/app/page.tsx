@@ -1,95 +1,60 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import "./page.css";
+import data from "./../data.json";
+import PeopleCards from "./UI/PeopleCards";
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const people = data.persons;
+  const animal = data.animals;
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+  const randomNum: number[] = [];
+
+  function getRandomNumber() {
+    for (let i = 0; randomNum.length < 12; i++) {
+      let getNum = Math.floor(Math.random() * 1001);
+      if (randomNum.includes(getNum)) {
+        getNum = Math.floor(Math.random() * 1001);
+      }
+      randomNum.push(getNum);
+      getNum = 0;
+      i++;
+    }
+  }
+
+  getRandomNumber();
+
+  return (
+    <>
+      <h1>Bienvenue</h1>
+      <section className="welcome">
+        <article className="showcase">
+          <h2>Les membres du jour</h2>
+          <section className="card-show">
+            {randomNum.length !== 0 &&
+              randomNum.map((num) => (
+                <div key={people[num].id}>
+                  <PeopleCards
+                    firstname={people[num].firstName}
+                    lastname={people[num].lastName}
+                  />
+                </div>
+              ))}
+          </section>
+        </article>
+        <article className="showcase">
+          <h2>Quelques compagnons</h2>
+          <section className="card-show">
+            {randomNum.length !== 0 &&
+              randomNum.map((num) => (
+                <div key={animal[num].id}>
+                  <PeopleCards
+                    firstname={animal[num].name}
+                    lastname={animal[num].breed}
+                  />
+                </div>
+              ))}
+          </section>
+        </article>
+      </section>
+    </>
   );
 }
