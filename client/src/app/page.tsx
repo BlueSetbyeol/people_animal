@@ -1,6 +1,7 @@
 import "./page.css";
 import data from "./../data.json";
 import PeopleCards from "./UI/PeopleCards";
+import AnimalCards from "./UI/AnimalCards";
 
 export default function Home() {
   const people = data.persons;
@@ -46,9 +47,9 @@ export default function Home() {
             {randomNum.length !== 0 &&
               randomNum.map((num) => (
                 <div key={animal[num].id}>
-                  <PeopleCards
-                    firstname={animal[num].name}
-                    lastname={animal[num].breed}
+                  <AnimalCards
+                    name={animal[num].name}
+                    breed={animal[num].breed}
                   />
                 </div>
               ))}
